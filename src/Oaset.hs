@@ -1,15 +1,20 @@
 module Oaset (
-
+    test,
 ) where
 
-import Data.Hashable ()
+import Data.Hashable (Hashable)
 import Data.Maybe ()
 
-data OASet a = OASet
+newtype OASet a = OASet
     { table :: [Maybe a]
-    , size :: Int
     }
     deriving (Show)
 
 empty :: Int -> OASet a
-empty max_size = OASet (replicate max_size Nothing) 0
+empty max_size = OASet (replicate max_size Nothing)
+
+-- insert :: (Eq a, Hashable a) => a -> OASet a -> OASet a
+-- insert x (OASet table)  =
+
+test :: OASet Integer
+test = OASet [Just 1, Just 2, Nothing]

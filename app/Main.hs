@@ -1,6 +1,6 @@
 module Main (main) where
 
-import Oaset
+import Oaset (test)
 
 main :: IO ()
-main = putStrLn "sss"
+main = print test
