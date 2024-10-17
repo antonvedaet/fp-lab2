@@ -54,5 +54,19 @@ map f (OASet table) = OASet (go table)
     go (Nothing:xs) = Nothing : go xs
     go (Just x:xs) = Just (f x) : go xs
 
-test :: OASet Integer
-test = Oaset.map (+11) (insert 10 (empty 2))
+foldl :: (b -> a -> b) -> b -> OASet a -> b
+foldl f acc (OASet table) = foldlTable acc table
+  where
+    foldlTable acc [] = acc
+    foldlTable acc (Nothing:xs) = foldlTable acc xs
+    foldlTable acc (Just x:xs) = foldlTable (f acc x) xs
+
+foldr :: (a -> b -> b) -> b -> OASet a -> b
+foldr f acc (OASet table) = foldrTable table acc
+  where
+    foldrTable [] acc = acc
+    foldrTable (Nothing:xs) acc = foldrTable xs acc
+    foldrTable (Just x:xs) acc = f x (foldrTable xs acc)
+
+test :: Integer
+test = Oaset.foldr (+) 0 (insert 52 (insert 10 (empty 2)))
