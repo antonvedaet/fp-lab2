@@ -38,5 +38,15 @@ remove x (OASet table) = go (hashIndex x (length table)) 0
         | table !! idx == Just x = OASet (take idx table ++ [Nothing] ++ drop (idx + 1) table)
         | otherwise = go ((idx + 1) `mod` max_size) (n + 1)
 
+filter :: (a -> Bool) -> OASet a -> OASet a
+filter predicate (OASet table) = OASet (filterTable table)
+  where
+    filterTable [] = []
+    filterTable (Nothing:xs) = Nothing : filterTable xs
+    filterTable (Just x:xs)
+      | predicate x = Just x : filterTable xs
+      | otherwise = Nothing : filterTable xs
+
+
 test :: OASet Integer
-test = remove 10 (insert 10 (empty 2))
+test = Oaset.filter (>11) (insert 10 (empty 2))
