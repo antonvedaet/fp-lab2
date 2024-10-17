@@ -39,14 +39,20 @@ remove x (OASet table) = go (hashIndex x (length table)) 0
         | otherwise = go ((idx + 1) `mod` max_size) (n + 1)
 
 filter :: (a -> Bool) -> OASet a -> OASet a
-filter predicate (OASet table) = OASet (filterTable table)
+filter predicate (OASet table) = OASet (go table)
   where
-    filterTable [] = []
-    filterTable (Nothing:xs) = Nothing : filterTable xs
-    filterTable (Just x:xs)
-      | predicate x = Just x : filterTable xs
-      | otherwise = Nothing : filterTable xs
+    go [] = []
+    go (Nothing:xs) = Nothing : go xs
+    go (Just x:xs)
+      | predicate x = Just x : go xs
+      | otherwise = Nothing : go xs
 
+map :: (a -> b) -> OASet a -> OASet b
+map f (OASet table) = OASet (go table)
+  where
+    go [] = []
+    go (Nothing:xs) = Nothing : go xs
+    go (Just x:xs) = Just (f x) : go xs
 
 test :: OASet Integer
-test = Oaset.filter (>11) (insert 10 (empty 2))
+test = Oaset.map (+11) (insert 10 (empty 2))
