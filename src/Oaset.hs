@@ -6,6 +6,7 @@ module Oaset (
     Oaset.map,
     Oaset.foldl,
     Oaset.foldr,
+    union,
     OASet(..)
 ) where
 
@@ -76,3 +77,10 @@ foldr f acc (OASet table) = foldrTable table acc
     foldrTable [] acc = acc
     foldrTable (Nothing:xs) acc = foldrTable xs acc
     foldrTable (Just x:xs) acc = f x (foldrTable xs acc)
+
+union :: (Hashable a) => OASet a -> OASet a -> OASet a
+union (OASet t1) (OASet t2) = OASet (zipWith combine t1 t2)
+  where
+    combine Nothing x = x
+    combine x Nothing = x
+    combine (Just x) (Just _) = Just x

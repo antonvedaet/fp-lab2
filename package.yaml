@@ -23,6 +23,7 @@ dependencies:
 - base >= 4.7 && < 5
 - hashable >= 1.4.0.0
 - HUnit >= 1.6.0.0
+- QuickCheck >= 2.10
 
 ghc-options:
 - -Wall

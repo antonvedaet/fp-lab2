@@ -1,6 +1,6 @@
 import Test.HUnit
 import Oaset
-
+import PropertySpec (runPropertyTests)
 testEmpty :: Test
 testEmpty = TestCase $ do
     let set = empty 10 :: OASet Int
@@ -50,5 +50,7 @@ tests = TestList [ TestLabel "testEmpty" testEmpty
                  , TestLabel "testFoldr" testFoldr
                  ]
 
-main :: IO Counts
-main = runTestTT tests
+main :: IO ()
+main = do
+    _ <- runTestTT tests
+    runPropertyTests
