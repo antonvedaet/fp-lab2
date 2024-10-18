@@ -1,6 +1,6 @@
 module Main (main) where
 
-import Oaset (hashIndex, test)
+import Oaset ()
 
 main :: IO ()
-main = print $ test
+main = print "Lab2"

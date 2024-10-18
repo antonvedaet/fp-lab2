@@ -1,6 +1,12 @@
 module Oaset (
-    test,
-    hashIndex,
+    empty,
+    insert,
+    remove,
+    Oaset.filter,
+    Oaset.map,
+    Oaset.foldl,
+    Oaset.foldr,
+    OASet(..)
 ) where
 
 import Data.Hashable (Hashable, hash)
@@ -10,6 +16,9 @@ newtype OASet a = OASet
     { table :: [Maybe a]
     }
     deriving (Show)
+
+instance (Eq a) => Eq (OASet a) where
+  (OASet t1) == (OASet t2) = t1 == t2
 
 empty :: Int -> OASet a
 empty max_size = OASet (replicate max_size Nothing)
@@ -67,6 +76,3 @@ foldr f acc (OASet table) = foldrTable table acc
     foldrTable [] acc = acc
     foldrTable (Nothing:xs) acc = foldrTable xs acc
     foldrTable (Just x:xs) acc = f x (foldrTable xs acc)
-
-test :: Integer
-test = Oaset.foldr (+) 0 (insert 52 (insert 10 (empty 2)))
